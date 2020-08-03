@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import TodosList from "../components/TodosList/TodosList";
 import { fetchTodos } from "../modules/todos";
+import AddTodo from "../components/AddTodo/AddTodo";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+      <AddTodo />
       <TodosList todos={todos} />
     </View>
   );

@@ -5,8 +5,8 @@ class API {
     return this.call("GET", "");
   };
 
-  create(endpoint, data = {}) {
-    return this.call("POST", endpoint, data);
+  create(data = {}) {
+    return this.call("POST", "", data);
   }
 
   update(id, data = {}) {
@@ -26,7 +26,7 @@ class API {
       method,
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-type": "application/json; charset=UTF-8",
       },
       ...(data && { body: JSON.stringify(data) }),
     });
