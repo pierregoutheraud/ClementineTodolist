@@ -11,10 +11,13 @@ export function getStore() {
 export default preloadedState => {
   let middlewares = [thunk];
 
+  const composeEnhancers =
+    (__DEV__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
   store = createStore(
     rootReducer,
     preloadedState,
-    compose(applyMiddleware(...middlewares))
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
   return store;
