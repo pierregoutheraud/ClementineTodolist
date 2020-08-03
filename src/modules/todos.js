@@ -1,8 +1,9 @@
+import api from "../lib/api";
+
 const FETCH_TODOS = "FETCH_TODOS";
 
 export const fetchTodos = () => async dispatch => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
-  const data = await res.json();
+  const data = await api.fetchTodos();
   const todos = data;
   // .filter(todo => todo.userId === 1);
   dispatch({
