@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import TodosList from "../components/TodosList/TodosList";
+import { fetchTodos } from "../modules/todos";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,10 +11,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
+export default function Home() {
+  const dispatch = useDispatch();
+  const todos = useSelector(state => state.todos);
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, []);
+
+  if (!todos) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>HOME</Text>
+      <TodosList todos={todos} />
     </View>
   );
 }
