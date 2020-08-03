@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import Todo from "../Todo/Todo";
 
 const styles = StyleSheet.create({
@@ -10,18 +10,13 @@ const styles = StyleSheet.create({
 });
 
 export default function TodosList({ todos }) {
-  function renderItem({ item: todo }) {
-    return <Todo todo={todo} />;
-  }
+  const list = todos.map(todo => {
+    return <Todo key={todo.id} todo={todo} />;
+  });
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={todos}
-        renderItem={renderItem}
-        keyExtractor={todo => "" + todo.id}
-        initialNumToRender={50}
-      />
+      <ScrollView>{list}</ScrollView>
     </View>
   );
 }

@@ -14,10 +14,12 @@ class API {
   }
 
   delete(id) {
-    return this.call("DELETE", `/${id}`, data);
+    return this.call("DELETE", `/${id}`);
   }
 
   async call(method = "GET", endpoint, data = null) {
+    console.log("API CALL", method, endpoint, data);
+
     const url = this.url + endpoint;
 
     const res = await fetch(url, {
@@ -26,7 +28,7 @@ class API {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      ...(data && { body: data }),
+      ...(data && { body: JSON.stringify(data) }),
     });
 
     return res.json();

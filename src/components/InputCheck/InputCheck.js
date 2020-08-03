@@ -4,6 +4,9 @@ import { AntDesign } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   container: {
+    padding: 5,
+  },
+  circle: {
     height: 30,
     width: 30,
     borderWidth: 1,
@@ -31,11 +34,10 @@ export default function Todo({
   }
 
   return (
-    <TouchableOpacity
-      style={[styles.container, completed && styles.completed, style]}
-      onPress={handlePress}
-    >
-      {completed && <AntDesign name="check" size={20} color="green" />}
+    <TouchableOpacity style={[styles.container, style]} onPress={handlePress}>
+      <View style={[styles.circle, completed && styles.completed]}>
+        {completed && <AntDesign name="check" size={20} color="green" />}
+      </View>
     </TouchableOpacity>
   );
 }
