@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: "row",
+    alignItems: "center",
     flex: 1,
     marginHorizontal: 10,
   },
@@ -25,10 +26,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
-  close: {
+  touchableRight: {
     padding: 10,
   },
-  closeIcon: {
+  iconRight: {
     opacity: 0.5,
   },
   image: {
@@ -39,9 +40,11 @@ const styles = StyleSheet.create({
 // Using React.memo to prevent re-rendering all todos when only one is updated
 export default React.memo(({ todo }) => {
   const { id, title: defaultTitle, image = null, completed } = todo;
+  const timeout = useRef(null);
+  const input = useRef(null);
   const dispatch = useDispatch();
   const [title, setTitle] = useState(defaultTitle);
-  const timeout = useRef(null);
+  const [isFocus, setIsFocus] = useState(false);
 
   function handleDelete() {
     dispatch(deleteTodo(id));
@@ -59,6 +62,18 @@ export default React.memo(({ todo }) => {
     }, 300);
   }
 
+  function handleDone() {
+    input.blur();
+  }
+
+  function handleFocus() {
+    setIsFocus(true);
+  }
+
+  function handleBlur() {
+    setIsFocus(false);
+  }
+
   return (
     <View style={styles.container}>
       <InputCheck
@@ -69,20 +84,34 @@ export default React.memo(({ todo }) => {
       <View style={styles.content}>
         {image && <ViewImage style={styles.image} image={image} />}
         <TextInput
+          ref={input}
           style={styles.title}
           onChangeText={handleChangeTitle}
           value={title}
           multiline
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </View>
-      <TouchableOpacity style={styles.close} onPress={handleDelete}>
-        <AntDesign
-          name="close"
-          size={20}
-          style={styles.closeIcon}
-          color={colors.red}
-        />
-      </TouchableOpacity>
+      {isFocus ? (
+        <TouchableOpacity style={styles.touchableRight} onPress={handleDone}>
+          <AntDesign
+            name="check"
+            size={20}
+            style={styles.iconRight}
+            color={colors.green}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.touchableRight} onPress={handleDelete}>
+          <AntDesign
+            name="close"
+            size={20}
+            style={styles.iconRight}
+            color={colors.red}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 });
