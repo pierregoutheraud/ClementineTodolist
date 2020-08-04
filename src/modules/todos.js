@@ -1,9 +1,11 @@
 import api from "../lib/api";
+import { FILTERS } from "../constants/filters";
 
 const FETCH_TODOS = "FETCH_TODOS";
 const DELETE_TODO = "DELETE_TODO";
 const UPDATE_TODO = "UPDATE_TODO";
 const CREATE_TODO = "CREATE_TODO";
+const CLEAR_COMPLETED_TODOS = "CLEAR_COMPLETED_TODOS";
 
 export const fetchTodos = () => async dispatch => {
   const data = await api.fetchTodos();
@@ -70,6 +72,28 @@ export const createTodo = payload => async dispatch => {
   }
 };
 
+export const clearCompletedTodos = () => async (dispatch, getState) => {
+  const completedTodos = getState().todos.filter(todo => todo.completed);
+  dispatch({
+    type: CLEAR_COMPLETED_TODOS,
+  });
+  // We delete all completed todos from database
+  return api.deleteTodos(completedTodos);
+};
+
+export function selectFilteredTodos(state) {
+  const { filter, todos } = state;
+  return todos.filter(todo => {
+    if (filter === FILTERS.SHOW_ALL) {
+      return true;
+    } else if (filter === FILTERS.SHOW_ACTIVE) {
+      return !todo.completed;
+    } else if (filter === FILTERS.SHOW_COMPLETED) {
+      return todo.completed;
+    }
+  });
+}
+
 const initialState = [];
 
 export default todos = (state = initialState, action) => {
@@ -94,6 +118,9 @@ export default todos = (state = initialState, action) => {
     }
     case CREATE_TODO: {
       return [todo, ...state];
+    }
+    case CLEAR_COMPLETED_TODOS: {
+      return state.filter(todo => !todo.completed);
     }
   }
   return state;

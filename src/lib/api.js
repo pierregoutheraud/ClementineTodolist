@@ -17,6 +17,18 @@ class API {
     return this.call("DELETE", `/${id}`);
   }
 
+  deleteTodos(todos) {
+    /*
+      Concurrent calls to delete
+      Could also be done in sequential in case too many to delete at the same time
+    */
+    return Promise.all(
+      todos.map(todo => {
+        return this.delete(todo.id);
+      })
+    );
+  }
+
   async call(method = "GET", endpoint, data = null) {
     console.log("API CALL", method, endpoint, data);
 
