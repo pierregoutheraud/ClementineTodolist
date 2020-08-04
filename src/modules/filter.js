@@ -1,6 +1,6 @@
 import { FILTERS } from "../constants/filters";
 
-const SET_FILTER = "SET_FILTER";
+export const SET_FILTER = "SET_FILTER";
 
 export function setFilter(filter) {
   return {
