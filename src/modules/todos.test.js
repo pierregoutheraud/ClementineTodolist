@@ -1,11 +1,87 @@
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
 import todos from "./todos";
 import {
+  fetchTodos,
+  deleteTodo,
+  updateTodo,
+  createTodo,
+  clearCompletedTodos,
   FETCH_TODOS,
   DELETE_TODO,
   UPDATE_TODO,
   CREATE_TODO,
   CLEAR_COMPLETED_TODOS,
 } from "./todos";
+import { FILTERS } from "../constants/filters";
+jest.mock("../lib/api");
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+describe("todos actions", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore();
+  });
+
+  it("fetchTodos should create FETCH_TODOS action", () => {
+    return store.dispatch(fetchTodos()).then(actionResponse => {
+      expect(actionResponse).toEqual({
+        type: "FETCH_TODOS",
+        todos: [
+          { id: 1, title: "Title1", completed: false, userId: 1 },
+          { id: 2, title: "Title2", completed: false, userId: 1 },
+        ],
+      });
+    });
+  });
+
+  it("deleteTodo should create DELETE_TODO action", () => {
+    const expectedActions = [{ type: DELETE_TODO, todoId: 1 }];
+    return store.dispatch(deleteTodo(1)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it("createTodo should create UPDATE_TODO action", () => {
+    const expectedActions = [
+      {
+        type: UPDATE_TODO,
+        todoId: 1,
+        payload: {
+          title: "NewTitle1",
+        },
+      },
+    ];
+    return store.dispatch(updateTodo(1, { title: "NewTitle1" })).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it("createTodo should create CREATE_TODO action", () => {
+    return store.dispatch(createTodo({ title: "Title1" })).then(() => {
+      const actions = store.getActions();
+      // Make sure we create todo first and the update it with new id from api
+      expect(actions[0].type).toEqual(CREATE_TODO);
+      expect(actions[0].todo.id).toEqual(actions[1].todoId);
+      expect(actions[1].type).toEqual(UPDATE_TODO);
+      expect(actions[1].payload.id).toBeDefined();
+      expect(actions[1].payload.id.includes("201")).toEqual(true);
+    });
+  });
+
+  it("clearCompletedTodos should create CLEAR_COMPLETED_TODOS action", () => {
+    const store = mockStore({
+      filter: FILTERS.SHOW_ALL,
+      todos: [],
+    });
+    const expectedActions = [{ type: CLEAR_COMPLETED_TODOS }];
+    return store.dispatch(clearCompletedTodos()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+});
 
 describe("todos reducer", () => {
   it("should handle initial state", () => {

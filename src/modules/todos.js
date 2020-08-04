@@ -32,7 +32,7 @@ export const updateTodo = (todoId, payload) => async dispatch => {
   });
 
   try {
-    await api.update(todoId, payload);
+    return await api.update(todoId, payload);
   } catch (e) {
     console.log(
       "Error because we try to update a todo id the API does not have. See README."
