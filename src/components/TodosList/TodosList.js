@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  containerStyle: {
+    paddingBottom: 100,
+  },
 });
 
 export default function TodosList({ todos }) {
@@ -16,7 +19,9 @@ export default function TodosList({ todos }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>{list}</ScrollView>
+      <ScrollView contentContainerStyle={styles.containerStyle}>
+        {list}
+      </ScrollView>
     </View>
   );
 }
