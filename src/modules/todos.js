@@ -1,11 +1,11 @@
 import api from "../lib/api";
 import { FILTERS } from "../constants/filters";
 
-const FETCH_TODOS = "FETCH_TODOS";
-const DELETE_TODO = "DELETE_TODO";
-const UPDATE_TODO = "UPDATE_TODO";
-const CREATE_TODO = "CREATE_TODO";
-const CLEAR_COMPLETED_TODOS = "CLEAR_COMPLETED_TODOS";
+export const FETCH_TODOS = "FETCH_TODOS";
+export const DELETE_TODO = "DELETE_TODO";
+export const UPDATE_TODO = "UPDATE_TODO";
+export const CREATE_TODO = "CREATE_TODO";
+export const CLEAR_COMPLETED_TODOS = "CLEAR_COMPLETED_TODOS";
 
 export const fetchTodos = () => async dispatch => {
   const data = await api.fetchTodos();
