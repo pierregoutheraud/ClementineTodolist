@@ -91,6 +91,7 @@ export default React.memo(({ todo }) => {
           multiline
           onFocus={handleFocus}
           onBlur={handleBlur}
+          scrollEnabled={false}
         />
       </View>
       {isFocus ? (
