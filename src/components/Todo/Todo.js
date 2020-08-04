@@ -4,6 +4,8 @@ import { StyleSheet, View, TouchableOpacity, TextInput } from "react-native";
 import InputCheck from "../InputCheck/InputCheck";
 import { AntDesign } from "@expo/vector-icons";
 import { deleteTodo, updateTodo } from "../../modules/todos";
+import ViewImage from "../ViewImage/ViewImage";
+import colors from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,22 +16,29 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "rgba(0,0,0,.1)",
   },
-  icon: {},
   content: {
+    flexDirection: "row",
     flex: 1,
-    marginHorizontal: 13,
+    marginHorizontal: 10,
   },
   title: {
     fontSize: 16,
+    flex: 1,
   },
   close: {
     padding: 10,
+  },
+  closeIcon: {
+    opacity: 0.5,
+  },
+  image: {
+    marginRight: 10,
   },
 });
 
 // Using React.memo to prevent re-rendering all todos when only one is updated
 export default React.memo(({ todo }) => {
-  const { id, title: defaultTitle, completed } = todo;
+  const { id, title: defaultTitle, image = null, completed } = todo;
   const dispatch = useDispatch();
   const [title, setTitle] = useState(defaultTitle);
   const timeout = useRef(null);
@@ -58,6 +67,7 @@ export default React.memo(({ todo }) => {
         onChange={handleChangeCompleted}
       />
       <View style={styles.content}>
+        {image && <ViewImage style={styles.image} image={image} />}
         <TextInput
           style={styles.title}
           onChangeText={handleChangeTitle}
@@ -66,7 +76,12 @@ export default React.memo(({ todo }) => {
         />
       </View>
       <TouchableOpacity style={styles.close} onPress={handleDelete}>
-        <AntDesign name="close" size={20} color="black" />
+        <AntDesign
+          name="close"
+          size={20}
+          style={styles.closeIcon}
+          color={colors.red}
+        />
       </TouchableOpacity>
     </View>
   );

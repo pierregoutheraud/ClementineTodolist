@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import colors from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,8 +16,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  completed: {
-    borderColor: "green",
+  circleCompleted: {
+    borderWidth: 2,
+    borderColor: colors.green,
   },
 });
 
@@ -35,8 +37,8 @@ export default function Todo({
 
   return (
     <TouchableOpacity style={[styles.container, style]} onPress={handlePress}>
-      <View style={[styles.circle, completed && styles.completed]}>
-        {completed && <AntDesign name="check" size={20} color="green" />}
+      <View style={[styles.circle, completed && styles.circleCompleted]}>
+        {completed && <Feather name="check" size={22} color={colors.green} />}
       </View>
     </TouchableOpacity>
   );
