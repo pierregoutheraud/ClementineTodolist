@@ -25,23 +25,49 @@ export const deleteTodo = todoId => async dispatch => {
 export const updateTodo = (todoId, payload) => async dispatch => {
   dispatch({
     type: UPDATE_TODO,
-    payload,
     todoId,
+    payload,
   });
-  return api.update(todoId, payload);
+
+  try {
+    await api.update(todoId, payload);
+  } catch (e) {
+    console.log(
+      "Error because we try to update a todo id the API does not have. See README."
+    );
+  }
 };
 
 export const createTodo = payload => async dispatch => {
-  const newTodo = await api.create(payload);
-  // The fake api always returns an id of 201 so I create a random id here
-  return dispatch({
+  /*
+  I create the todo with a temporary id and before the call to the api
+  so that it seems instant for the user.
+  */
+  const tempId = Math.random() + "_" + Date.now();
+  dispatch({
     type: CREATE_TODO,
     todo: {
       ...payload,
-      ...newTodo,
-      id: "" + Math.random() + Date.now(),
+      id: tempId,
     },
   });
+
+  try {
+    const newTodo = await api.create(payload);
+    dispatch({
+      type: UPDATE_TODO,
+      todoId: tempId,
+      payload: {
+        id: newTodo.id + "_" + Date.now(), // I should not use Date.now() here, but the fake api always returns an id of 201 so I have to in order to randomize it. See README.
+      },
+    });
+  } catch (e) {
+    // In case there is an error with the call, we delete the todo
+    dispatch({
+      type: DELETE_TODO,
+      todoId: tempId,
+    });
+  }
 };
 
 const initialState = [];

@@ -31,6 +31,10 @@ class API {
       ...(data && { body: JSON.stringify(data) }),
     });
 
+    if (res.status === 500) {
+      throw new Error(res.status);
+    }
+
     return res.json();
   }
 }
