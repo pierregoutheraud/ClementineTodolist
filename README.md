@@ -1,3 +1,9 @@
+# Usage
+
+`yarn start` will start Expo.
+
+# Api
+
 Because of how https://jsonplaceholder.typicode.com fake api works,
 the resource will not be really created on the server but it will be faked as if.
 Since the server always returns the same id when you create a todo (it always returns 201),
