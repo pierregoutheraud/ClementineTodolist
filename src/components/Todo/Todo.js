@@ -92,10 +92,16 @@ export default React.memo(({ todo }) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           scrollEnabled={false}
+          accessibilityLabel="Title"
         />
       </View>
       {isFocus ? (
-        <TouchableOpacity style={styles.touchableRight} onPress={handleDone}>
+        <TouchableOpacity
+          style={styles.touchableRight}
+          onPress={handleDone}
+          accessibilityLabel="Edit"
+          accessibilityRole="button"
+        >
           <AntDesign
             name="check"
             size={20}
@@ -104,7 +110,12 @@ export default React.memo(({ todo }) => {
           />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.touchableRight} onPress={handleDelete}>
+        <TouchableOpacity
+          style={styles.touchableRight}
+          onPress={handleDelete}
+          accessibilityLabel="Delete"
+          accessibilityRole="button"
+        >
           <AntDesign
             name="close"
             size={20}
