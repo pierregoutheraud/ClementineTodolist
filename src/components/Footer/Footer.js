@@ -60,6 +60,8 @@ export default function Footer({ todos }) {
         key={filter}
         style={[styles.filter, active && styles.filterActive]}
         onPress={() => handlePress(filter)}
+        accessibilityRole="menuitem"
+        accessibilityLabel={`${FILTERS_TEXT[filter]} button`}
       >
         <Text style={[styles.filterText, active && styles.filterTextActive]}>
           {FILTERS_TEXT[filter]}
@@ -73,8 +75,10 @@ export default function Footer({ todos }) {
       <Text>
         {todosCompleted.length}/{todos.length}
       </Text>
-      <View style={styles.filters}>{filters}</View>
-      <TouchableOpacity onPress={handleClearAll}>
+      <View style={styles.filters} accessibilityRole="menu">
+        {filters}
+      </View>
+      <TouchableOpacity onPress={handleClearAll} accessibilityRole="link">
         <Text>Clear completed</Text>
       </TouchableOpacity>
     </View>
