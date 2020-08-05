@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import TodosList from "../components/TodosList/TodosList";
 import { fetchTodos, selectFilteredTodos } from "../modules/todos";

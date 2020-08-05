@@ -1,6 +1,5 @@
 import React from "react";
 import { createRenderer } from "react-test-renderer/shallow";
-import TestRenderer from "react-test-renderer";
 import TodosList from "./TodosList";
 import Todo from "../Todo/Todo";
 
