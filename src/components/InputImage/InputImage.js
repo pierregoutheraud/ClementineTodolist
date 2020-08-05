@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -30,9 +30,8 @@ export default function InputImage({
   async function handlePress() {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      console.log(status);
       if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+        return;
       }
     }
 
@@ -52,16 +51,26 @@ export default function InputImage({
 
   return (
     <View style={[styles.container, style]}>
-      <TouchableOpacity style={styles.touchable} onPress={handlePress}>
+      <TouchableOpacity
+        style={styles.touchable}
+        onPress={handlePress}
+        accessibilityLabel="Add image"
+      >
         {image ? (
-          <Image source={{ uri: image }} style={styles.image} />
-        ) : (
-          <MaterialCommunityIcons
-            style={styles.add}
-            name="image-plus"
-            size={24}
-            color={colors.gray}
+          <Image
+            source={{ uri: image }}
+            style={styles.image}
+            accessibilityRole="imagebutton"
           />
+        ) : (
+          <View accessibilityRole="button">
+            <MaterialCommunityIcons
+              style={styles.add}
+              name="image-plus"
+              size={24}
+              color={colors.gray}
+            />
+          </View>
         )}
       </TouchableOpacity>
     </View>
