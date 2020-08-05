@@ -36,7 +36,7 @@ const render = () => {
 };
 
 describe("components", () => {
-  it("should render todos", () => {
+  test("should render todos", () => {
     const { output } = render();
 
     const todosChildren = output.props.children.props.children;

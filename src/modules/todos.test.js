@@ -25,7 +25,7 @@ describe("todos actions", () => {
     store = mockStore();
   });
 
-  it("fetchTodos should create FETCH_TODOS action", () => {
+  test("fetchTodos should create FETCH_TODOS action", () => {
     return store.dispatch(fetchTodos()).then(actionResponse => {
       expect(actionResponse).toEqual({
         type: "FETCH_TODOS",
@@ -37,14 +37,14 @@ describe("todos actions", () => {
     });
   });
 
-  it("deleteTodo should create DELETE_TODO action", () => {
+  test("deleteTodo should create DELETE_TODO action", () => {
     const expectedActions = [{ type: DELETE_TODO, todoId: 1 }];
     return store.dispatch(deleteTodo(1)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
-  it("createTodo should create UPDATE_TODO action", () => {
+  test("createTodo should create UPDATE_TODO action", () => {
     const expectedActions = [
       {
         type: UPDATE_TODO,
@@ -59,7 +59,7 @@ describe("todos actions", () => {
     });
   });
 
-  it("createTodo should create CREATE_TODO action", () => {
+  test("createTodo should create CREATE_TODO action", () => {
     return store.dispatch(createTodo({ title: "Title1" })).then(() => {
       const actions = store.getActions();
       // Make sure we create todo first and the update it with new id from api
@@ -71,7 +71,7 @@ describe("todos actions", () => {
     });
   });
 
-  it("clearCompletedTodos should create CLEAR_COMPLETED_TODOS action", () => {
+  test("clearCompletedTodos should create CLEAR_COMPLETED_TODOS action", () => {
     const store = mockStore({
       filter: FILTERS.SHOW_ALL,
       todos: [],
@@ -84,11 +84,11 @@ describe("todos actions", () => {
 });
 
 describe("todos reducer", () => {
-  it("should handle initial state", () => {
+  test("should handle initial state", () => {
     expect(todos(undefined, {})).toEqual([]);
   });
 
-  it("should handle FETCH_TODOS", () => {
+  test("should handle FETCH_TODOS", () => {
     expect(
       todos([], {
         type: FETCH_TODOS,
@@ -119,7 +119,7 @@ describe("todos reducer", () => {
     ]);
   });
 
-  it("should handle CREATE_TODO", () => {
+  test("should handle CREATE_TODO", () => {
     expect(
       todos([], {
         type: CREATE_TODO,
@@ -210,7 +210,7 @@ describe("todos reducer", () => {
     ]);
   });
 
-  it("should handle DELETE_TODO", () => {
+  test("should handle DELETE_TODO", () => {
     expect(
       todos(
         [
@@ -239,7 +239,7 @@ describe("todos reducer", () => {
     ]);
   });
 
-  it("should handle UPDATE_TODO", () => {
+  test("should handle UPDATE_TODO", () => {
     expect(
       todos(
         [
@@ -277,7 +277,7 @@ describe("todos reducer", () => {
     ]);
   });
 
-  it("should handle CLEAR_COMPLETED_TODOS", () => {
+  test("should handle CLEAR_COMPLETED_TODOS", () => {
     expect(
       todos(
         [
