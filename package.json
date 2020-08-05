@@ -9,7 +9,10 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
   },
   "dependencies": {
     "expo": "~38.0.8",
@@ -26,6 +29,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@testing-library/jest-native": "^3.3.0",
+    "@testing-library/react-native": "^7.0.1",
     "babel-preset-expo": "~8.1.0",
     "jest-expo": "^38.0.2",
     "react-test-renderer": "^16.13.1"
