@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Todo({
+export default function InputCheck({
   style,
   defaultCompleted = false,
   onChange = () => {},
@@ -36,9 +36,21 @@ export default function Todo({
   }
 
   return (
-    <TouchableOpacity style={[styles.container, style]} onPress={handlePress}>
+    <TouchableOpacity
+      style={[styles.container, style]}
+      onPress={handlePress}
+      accessibilityLabel="completed-checkbox"
+      accessibilityRole="checkbox"
+    >
       <View style={[styles.circle, completed && styles.circleCompleted]}>
-        {completed && <Feather name="check" size={22} color={colors.green} />}
+        {completed && (
+          <Feather
+            name="check"
+            size={22}
+            color={colors.green}
+            accessibilityLabel="completed-icon"
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
