@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
 
 const styles = StyleSheet.create({
   container: {},
@@ -23,26 +23,34 @@ export default function ViewImage({ image, style }) {
 
   return (
     <>
-      <Modal animationType="slide" visible={modalVisible}>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        accessibilityLabel="Modal"
+      >
         <TouchableOpacity
           style={styles.modalContent}
           onPress={handleToggleImage}
+          accessibilityLabel="Close image"
         >
           <Image
             style={styles.imageFullscreen}
             source={{ uri: image }}
             resizeMode="contain"
+            accessibilityLabel="Image fullscreen"
           />
         </TouchableOpacity>
       </Modal>
       <TouchableOpacity
         style={[styles.container, style]}
         onPress={handleToggleImage}
+        accessibilityLabel="Display image"
       >
         <Image
           style={styles.image}
           source={{ uri: image }}
           resizeMode="contain"
+          accessibilityLabel="image"
         />
       </TouchableOpacity>
     </>
