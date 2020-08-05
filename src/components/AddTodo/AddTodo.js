@@ -74,6 +74,8 @@ export default function AddTodo() {
         style={styles.send}
         onPress={handleSubmit}
         disabled={!canSend}
+        accessibilityLabel="Add todo"
+        accessibilityRole="button"
       >
         <AntDesign
           name="plus"
